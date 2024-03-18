@@ -2,7 +2,7 @@
 
 This tutorial is for Jetson Nano 4GB version from Waveshare. You can check their official tutorial from [here](https://www.waveshare.net/wiki/JETSON-NANO-DEV-KIT).
 
-The system version is Jetpack r32.7.4 (latest). And Jetson Nano **doesn't** support **higher** version.
+The system version is Jetson Linux r32.7.4 (latest). And Jetson Nano **doesn't** support **higher** version.
 
 ## Requirement
 
@@ -57,27 +57,11 @@ Make sure your Linux System can access your USB connected device.
 2. Connect the DC Power. Wait few seconds.
 3. Connect the Jetson Nano and Linux System using Micro-USB cable.
 
-## Step 3 - Flash!
+## Step 2.5 - If you want ...
 
-Run:
+The size of EMMC disk on the board is 16 GB. If you want to put the system on a SD card, ignore step **3** and **5**.
 
-```Shell
-sudo ./flash.sh jetson-nano-emmc mmcblk0p1
-```
-
-> File `flash.sh` is in `Linux_for_Tegra` dictionary.\
-
-Wait until it is done.
-
-## Step 4 - Almost Done
-
-Linux system is prepared. You can reboot and set it up like Ubuntu 18.
-
-# If you want...
-
-The size of EMMC disk on the board is 16 GB. If you want to put the system on a SD card, do this.
-
-## Step 5 - De-Compile
+## Step 3 - Edit Device-Tree
 
 1. Install the tool application.
 
@@ -125,7 +109,7 @@ The size of EMMC disk on the board is 16 GB. If you want to put the system on a 
    dtc -I dts -O dtb -o tegra210-p3448-0002-p3449-0000-b00.dtb tegra210-p3448-0002-p3449-0000-b00.dts
    ```
 
-## Step 6 - Flash Again
+## Step 4 - Flash!
 
 Run:
 
@@ -133,13 +117,13 @@ Run:
 sudo ./flash.sh jetson-nano-emmc mmcblk0p1
 ```
 
-> File `flash.sh` is in `Linux_for_Tegra` dictionary.\
+> File `flash.sh` is in `Linux_for_Tegra` dictionary.
 
 Wait until it is done.
 
 Then set your system configution (username and password).
 
-## Step 7 - Setup the SD Card
+## Step 5 - Setup the SD Card
 
 Just *simply* move the system file to SD card. And then tell the Linux boot from SD card in the future.
 
@@ -207,3 +191,9 @@ Just *simply* move the system file to SD card. And then tell the Linux boot from
    ```Shell
    sudo reboot
    ```
+
+## Step 6 - Almost Done
+
+1. Remove the jumper on pin `FC REC` and `GND`. 
+2. Reset the power supply.
+3. Setup the configution (user, password) as setting up Ubuntu 18.
