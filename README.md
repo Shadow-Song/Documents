@@ -12,7 +12,7 @@ The system version is Jetson Linux r32.7.4 (latest). And Jetson Nano **doesn't**
 2. 5V 4A Power Adapter
 3. Jumper (or female-female cable)
 4. Micro-USB Cable
-   ![alt text](./Micro-USB.png)
+   ![Micro-USB](./Micro-USB.png)
 5. Monitor supporting HDMI or DP, and cable.
 6. SD Card and Reader (Optional)
 
@@ -81,10 +81,12 @@ The size of EMMC disk on the board is 16 GB. If you want to put the system on a 
 3. Edit the device tree.
 
    ```Shell
-   sudo vim tegra210-p3448-0002-p3449-0000-b00.dts
+   sudo gedit tegra210-p3448-0002-p3449-0000-b00.dts
    ```
 
    Find `sdhci@700b0400` part. Change the `status` value from `disable` to `okay`.
+
+   ![status](./status.png)
 
    Add these infomation into this part.
 
@@ -104,6 +106,8 @@ The size of EMMC disk on the board is 16 GB. If you want to put the system on a 
    uhs-mask = <0xc>;
    ```
 
+   ![gpios](./location.png)
+
 4. Re-compile the `dtb` file.
    ```Shell
    dtc -I dts -O dtb -o tegra210-p3448-0002-p3449-0000-b00.dtb tegra210-p3448-0002-p3449-0000-b00.dts
@@ -121,13 +125,11 @@ sudo ./flash.sh jetson-nano-emmc mmcblk0p1
 
 Wait until it is done.
 
-Then set your system configution (username and password).
-
 ## Step 5 - Setup the SD Card
 
 Just *simply* move the system file to SD card. And then tell the Linux boot from SD card in the future.
 
-**In the Jetson Nano System:**
+**Switch to your Jetson Nano System:**
 
 1. Check the SD Card
 
@@ -195,5 +197,6 @@ Just *simply* move the system file to SD card. And then tell the Linux boot from
 ## Step 6 - Almost Done
 
 1. Remove the jumper on pin `FC REC` and `GND`. 
-2. Reset the power supply.
-3. Setup the configution (user, password) as setting up Ubuntu 18.
+2. Connent your keyboard, mouse and monitor.
+3. Reset the power supply.
+4. Setup the configution (user, password) as setting up Ubuntu 18.
