@@ -44,9 +44,9 @@ Make sure your Linux System can access your USB connected device.
 
 3. Unzip
    ```Shell
-   tar -xjf jetson-210_linux_r32.7.4_aarch64.tbz2
+   sudo tar -xjf jetson-210_linux_r32.7.4_aarch64.tbz2
    cd Linux_for_Tegra/rootfs/
-   tar -xjf ../../tegra_linux_sample-root-filesystem_r32.7.4_aarch64.tbz2
+   sudo tar -xjf ../../tegra_linux_sample-root-filesystem_r32.7.4_aarch64.tbz2
    cd ../
    sudo ./apply_binaries.sh
    ```
@@ -59,7 +59,7 @@ Make sure your Linux System can access your USB connected device.
 
 ## Step 2.5 - If you want ...
 
-The size of EMMC disk on the board is 16 GB. If you want to put the system on a SD card, ignore step **3** and **5**.
+The size of EMMC disk on the board is 16 GB. If you want to move the system file to SD card, ignore step **3** and **6**.
 
 ## Step 3 - Edit Device-Tree
 
@@ -125,9 +125,18 @@ sudo ./flash.sh jetson-nano-emmc mmcblk0p1
 
 Wait until it is done.
 
-## Step 5 - Setup the SD Card
+## Step 5 - Setup Configution
 
-Just *simply* move the system file to SD card. And then tell the Linux boot from SD card in the future.
+1. Remove the jumper on pin `FC REC` and `GND`.
+2. Connent your keyboard, mouse and monitor.
+3. Reset the power supply.
+4. Setup the configution (user, password) as setting up Ubuntu 18.04.
+
+## Step 6 - Setup the SD Card
+
+Just _simply_ move the system file to SD card. And then tell the Linux boot from SD card in the future.
+
+Plug in the SD Card.
 
 **Switch to your Jetson Nano System:**
 
@@ -137,25 +146,37 @@ Just *simply* move the system file to SD card. And then tell the Linux boot from
    sudo ls /dev/mmcblk*
    ```
 
-2. Unmount the card.
+   You can see `/dev/mmcblk1` if it can be detected.
 
-   ```Shell
-   sudo umount /media/(Use TAB button to fix)
-   ```
+   ![Card](./1.png)
 
-3. Erase the SD Card
+2. Erase the SD Card
 
    ```Shell
    sudo mkfs.ext4 /dev/mmcblk1
    ```
 
-4. Check again
+   If it shows that something is wrong, unmount it first.
+
+   ![Card](./2.png)
+
+   ```Shell
+   sudo umount /media/(Use TAB button to fix)
+   ```
+
+   Then erase and format again.
+
+3. Check
 
    ```Shell
    sudo ls /dev/mmcblk*
    ```
 
-5. Edit booting path
+   You can see only `mmcblk1` now.
+
+   ![Card](./3.png)
+
+4. Edit booting path
 
    ```Shell
    sudo vi /boot/extlinux/extlinux.conf
@@ -169,13 +190,15 @@ Just *simply* move the system file to SD card. And then tell the Linux boot from
 
    Change `mmcblk0p1` to `mmcblk1`.
 
-6. Mount the card
+   ![Card](./4.png)
+
+5. Mount the card
 
    ```Shell
    sudo mount /dev/mmcblk1 /mnt
    ```
 
-7. Copy the system file to SD card.
+6. Copy the system file to SD card.
 
    ```Shell
    sudo cp -ax / /mnt
@@ -183,20 +206,21 @@ Just *simply* move the system file to SD card. And then tell the Linux boot from
 
    No log, no output, just wait.
 
-8. Unmount the card (Do not unplug it.)
+7. Unmount the card (Do not unplug it.)
 
    ```Shell
    sudo umount /mnt/
    ```
 
-9. Reboot
+8. Reboot
    ```Shell
    sudo reboot
    ```
 
-## Step 6 - Almost Done
+# Done.
 
-1. Remove the jumper on pin `FC REC` and `GND`. 
-2. Connent your keyboard, mouse and monitor.
-3. Reset the power supply.
-4. Setup the configution (user, password) as setting up Ubuntu 18.
+Things you can do:
+
+1. Set up VNC or SSH.
+2. Change `APT` source. [Tsinghua Mirrors Help](https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu-ports/)
+3. Install [PyTorch](https://pytorch.org/tutorials/) or [TensorFlow](https://tensorflow.google.cn/tutorials).
