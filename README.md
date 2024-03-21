@@ -217,6 +217,20 @@ Plug in the SD Card.
    sudo reboot
    ```
 
+# Step 7 - Install SDK
+
+Remember to change the `APT` source, or it will be very slow.
+
+The size of Jetpack SDK is about 6 GB. You can use following command to check the space of disk:
+
+```Shell
+df -h
+```
+
+It will show something like this:
+
+
+
 # Done.
 
 Things you can do:
